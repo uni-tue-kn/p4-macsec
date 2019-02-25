@@ -1,0 +1,37 @@
+#!/usr/bin/env python
+
+from __future__ import print_function
+import nnpy
+import struct
+
+class PortMonitor:
+
+    def __init__(self, queue, notification_socket, verbose = True):
+        self.verbose = verbose
+        self.queue = queue
+
+        self.sub = nnpy.Socket(nnpy.AF_SP, nnpy.SUB)
+        self.sub.connect(notification_socket)
+        self.sub.setsockopt(nnpy.SUB, nnpy.SUB_SUBSCRIBE, '')
+
+
+    def monitor_messages(self):
+        while True:
+            msg = self.sub.recv()
+            if self.verbose:
+                print('-------')
+                print(msg)
+            msg_type = struct.unpack('4s', msg[:4])
+            if msg_type[0] == 'PRT|':
+                switch_id = struct.unpack('Q', msg[4:12])
+                num_statuses = struct.unpack('I', msg[16:20])
+                # wir betrachten immer nur den ersten Status
+                port, status = struct.unpack('ii', msg[32:40])
+
+                self.queue.put((switch_id, port, status))
+                if self.verbose:
+                    print('Port status change')
+                    print('Switch ID: ' + str(switch_id[0]))
+                    print('num_statuses: ' + str(num_statuses[0]))
+                    print('port: ' + str(port))
+                    print('status: ' + str(status))

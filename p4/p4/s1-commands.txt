@@ -1,0 +1,7 @@
+table_set_default ipv4_lpm drop
+table_add ipv4_lpm ipv4_forward 10.0.1.1/32 => 00:00:00:00:01:01 1
+table_add ipv4_lpm ipv4_forward 10.0.2.2/32 => 00:00:00:02:02:00 2
+table_add ipv4_lpm ipv4_forward 10.0.2.254/32 => 00:00:00:02:02:ff 2
+table_add ipv4_lpm ipv4_forward 10.0.3.3/32 => 00:00:00:03:03:00 3
+table_add ipv4_lpm ipv4_forward 10.0.3.254/32 => 00:00:00:03:03:ff 3
+table_add protect_table protect_packet 2 => 0x00112233445566778899AABBCCDDEE21 00:00:00:01:01:ff

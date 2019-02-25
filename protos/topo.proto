@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+message topo {
+	string switch = 1;
+	bytes topo = 2;
+}
+
+message status {
+	bool success = 1;
+	string error = 2;
+}
+
+message controller {
+	string address = 1;
+	string switch = 2;
+	string mac = 3;
+}
+
+message registerID {
+	status status = 1;
+	uint32 id = 2;
+	bytes key = 3;
+}
+
+service TopoService {
+	rpc updateTopo(topo) returns (status);
+	rpc registerController(controller) returns (registerID);
+}

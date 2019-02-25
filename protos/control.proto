@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+message MACsecProtectRule {
+  string switch = 1;
+	uint32 port = 2;
+	bytes key = 3;
+  string systemID = 4;
+}
+
+message MACsecValidateRule {
+  string switch = 1;
+  uint32 port = 2;
+  bytes key = 3;
+}
+
+message control_status {
+	bool success = 1;
+	string error = 2;
+}
+
+service Control {
+	rpc addMACsecProtectRule(MACsecProtectRule) returns (control_status);
+	rpc addMACsecValidateRule(MACsecValidateRule) returns (control_status);
+  rpc deleteMACsecProtectRule(MACsecProtectRule) returns (control_status);
+	rpc deleteMACsecValidateRule(MACsecValidateRule) returns (control_status);
+}

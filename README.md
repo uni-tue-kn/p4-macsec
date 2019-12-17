@@ -33,7 +33,7 @@ Install dependencies for the controllers:
 
 ## Running Mininet Demo
 
-1. Run `make run` in `p4/p4`. If the P4 program is recompiled, you need to add the extern_instance definition to the generated json file manually and then run `mnake run` again. See [extern_instances](# extern_instances).
+1. Run `make run` in `p4/p4`. If the P4 program is recompiled, you need to add the extern_instance definition to the generated json file manually and then run `mnake run` again. See subsection 'extern_instances' below.
 2. Start central controller by running `./controller` in folder `controller`
 3. Start the local controller for each BMv2 switch by running the following commands in folder `controller_distributed`
 - `sudo ./controller.py -a 127.0.0.1:50051 -n s1 -s ipc:///tmp/bmv2-0-notifications.ipc -m 00:00:00:FF:01:01`

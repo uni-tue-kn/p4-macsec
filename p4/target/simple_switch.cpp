@@ -1,4 +1,5 @@
 /* Copyright 2013-present Barefoot Networks, Inc.
+ * Modifications copyright 2018-present University of Tuebingen, Chair of Communication Networks
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +16,10 @@
 
 /*
  * Antonin Bas (antonin@barefootnetworks.com)
+ * 
+ * Modifications:
+ * Marco Haeberle (marco.haeberle@uni-tuebingen.de)
+ * Joshua Hartmann
  *
  */
 

@@ -44,7 +44,7 @@ The local controllers will then start doing topology discovery and MACsec rules 
 
 ### extern_instances
 
-The p4c compiler version that was used for this project is not able to generate insteances of externs. You need to replace `"extern_instances" : [],` in `p4/p4/basic.json` with the following snippet after compiling the P4 program.
+The p4c compiler version that was used for this project is not able to generate instances of the MACsec externs. You need to replace `"extern_instances" : [],` in `p4/p4/build/basic.json` with the following snippet after compiling the P4 program.
 
 ```
   "extern_instances" : [

@@ -1,8 +1,0 @@
-table_set_default ipv4_lpm drop
-table_add ipv4_lpm ipv4_forward 10.0.1.1/32 => 00:00:00:01:03:00 2
-table_add ipv4_lpm ipv4_forward 10.0.1.254/32 => 00:00:00:01:03:ff 2
-table_add ipv4_lpm ipv4_forward 10.0.2.2/32 => 00:00:00:02:03:00 3
-table_add ipv4_lpm ipv4_forward 10.0.2.254/32 => 00:00:00:02:03:ff 3
-table_add ipv4_lpm ipv4_forward 10.0.3.3/32 => 00:00:00:00:03:03 1
-table_add ipsec_dec esp_decrypt 10.0.2.254 10.0.3.254 0x00000001 => 0xaaffffffffffffffffffffffffffffffffffffff 0xaa111111111111111111111111111111
-table_add ipsec_enc esp_encrypt 10.0.3.3 10.0.2.2 => 0xaaeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xaa222222222222222222222222222222 0x00000002 10.0.3.254 10.0.2.254

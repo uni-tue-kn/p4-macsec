@@ -27,20 +27,25 @@ Apply modifications to the BMv2 `simple_switch` and `simple_switch_grpc` targets
 
 Install dependencies for the controllers:
 
-1. `sudo pip install grpc, protobuf, cryptography`
+1.
+    ```
+    sudo pip install grpc
+    sudo pip install protobuf
+    sudo pip install cryptography
+    ```
 2. `sudo pip install --upgrade scapy`
 3. `sudo apt remove python-scapy`
 
 ## Running Mininet Demo
 
-1. Run `make run` in `p4/p4`. If the P4 program is recompiled, you need to add the extern_instance definition to the generated json file manually and then run `mnake run` again. See subsection 'extern_instances' below.
-2. Start central controller by running `./controller` in folder `controller`
+1. Run `make run` in `p4/p4`. If the P4 program is recompiled, you need to add the extern_instance definition to the generated json file manually and then run `make run` again. See subsection 'extern_instances' below.
+2. Start central controller by running `./controller.py` in folder `controller`
 3. Start the local controller for each BMv2 switch by running the following commands in folder `controller_distributed`
 - `sudo ./controller.py -a 127.0.0.1:50051 -n s1 -s ipc:///tmp/bmv2-0-notifications.ipc -m 00:00:00:FF:01:01`
 - `sudo ./controller.py -a 127.0.0.1:50052 -n s2 -s ipc:///tmp/bmv2-1-notifications.ipc -d 1 -l localhost:52002 -m 00:00:00:FF:02:02`
 - `sudo ./controller.py -a 127.0.0.1:50053 -n s3 -s ipc:///tmp/bmv2-2-notifications.ipc -d 2 -l localhost:52003 -m 00:00:00:FF:03:03`
 
-The local controllers will then start doing topology discovery and MACsec rules are added automatically to the match action tables of the switches. You can then start pinging the virtual hosts from each other in Mininet. The first one or two packets will be lost due to the impolementation of MAC learning.
+The local controllers will then start doing topology discovery and MACsec rules are added automatically to the match action tables of the switches. You can then start pinging the virtual hosts from each other in Mininet. The first one or two packets will be lost due to the implementation of MAC learning.
 
 ### extern_instances
 

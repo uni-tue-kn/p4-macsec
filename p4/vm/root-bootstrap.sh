@@ -49,7 +49,6 @@ apt-get install -y --no-install-recommends \
   python-dev \
   python-ipaddr \
   python-pip \
-  python-scapy \
   python-setuptools \
   tcpdump \
   unzip \
@@ -63,7 +62,11 @@ apt-get install -y --no-install-recommends \
   swig \
   python-psutil \
   libprotobuf-c-dev \
-  protobuf-c-compiler
+  protobuf-c-compiler \
+  python-ply \
+  python3-pip \
+  python3-setuptools \
+  tmux
 
 #ln -s /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 /usr/lib/x86_64-linux-gnu/libcrypto.so.6
 #ln -s /usr/lib/x86_64-linux-gnu/libssl.so.1.1 /usr/lib/x86_64-linux-gnu/libssl.so.6

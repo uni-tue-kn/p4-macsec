@@ -98,11 +98,12 @@ struct user_metadata_t {
     bit<48>        src_mac_timeout;
     egressSpec_t   src_mac_table_port;
     bool           from_controller;
+    bool           recirculate;
     bool	   recirculated;
 }
 
 struct intrinsic_metadata_t {
-	bit<16>   recirculate_flag;
+    bit<16>   recirculate_flag;
     bit<48>   ingress_global_timestamp;
 }
 
@@ -204,7 +205,7 @@ control MyIngress(inout headers hdr,
                   inout metadata meta,
                   inout standard_metadata_t standard_metadata) {
     action drop() {
-        mark_to_drop();
+        mark_to_drop(standard_metadata);
     }
 
     action send_to_controller(bit<16> reason, egressSpec_t port){
@@ -306,9 +307,9 @@ control MyIngress(inout headers hdr,
                 hdr.sectag.setInvalid();
 
                 //headers from decrypted payload not parsed -> recirculate packet
-                meta.user_metadata.recirculated = true;
-                recirculate({meta.intrinsic_metadata, standard_metadata, meta.user_metadata});
-            }
+                //recirculation should must done in egress according to v1model.p4, so set metadata field onyl
+                meta.user_metadata.recirculate = true;
+           }
         }
 
         // LLDP or BDDP packet, send to controller
@@ -382,7 +383,13 @@ control MyEgress(inout headers hdr,
     }
 
     apply {
-        if (!hdr.cpu_header.isValid() && hdr.ethernet.isValid() && hdr.ethernet.etherType != TYPE_ARP
+        # recirculate packet if necessary
+        if (meta.user_metadata.recirculate) {
+            meta.user_metadata.recirculate = false;
+            meta.user_metadata.recirculated = true;
+            recirculate({standard_metadata.ingress_port,meta.user_metadata});
+        }
+        else if (!hdr.cpu_header.isValid() && hdr.ethernet.isValid() && hdr.ethernet.etherType != TYPE_ARP
                 && hdr.ethernet.etherType != TYPE_BDDP && protect_tbl.apply().hit){
             bit<128> SAK = meta.user_metadata.SAK;
             //get the PN from the corresponding counter

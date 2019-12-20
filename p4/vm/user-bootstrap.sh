@@ -5,21 +5,18 @@ set -x
 # Exit on errors.
 set -e
 
-#BMV2_COMMIT="39abe290b4143e829b8f983965fcdc711e3c450c"
-BMV2_COMMIT="ae87b4d4523488ac935133b4aef437796ad1bbd1"
+BMV2_COMMIT="9ef324838b29419040b4f677a3ff65bc72405c44"
+PI_COMMIT="1539ecd8a50c159b011d9c5a9c0eba99f122a845"
+P4C_COMMIT="afb501c85159bb511650759eaf6aa8e259d37827"
 
-#PI_COMMIT="1ca80066e065ae52a34416822c20b83173b2146f"
-PI_COMMIT="a3d905b14fb151a6752adc076902c9cb75f719ef"
-
-#P4C_COMMIT="e737c57d1dd32b2daaaecf0bc17bb475b14bdf4c"
-#P4C_COMMIT="6070b20a6ca83bc6c66c6aac2ea53f83df1c8c61"
-#P4C_COMMIT="5f948527dc9f67525b5d0067dc33365f3c6c669b"
-P4C_COMMIT="04c02d5eab53fbfc35a4dfca5bfeeeeaa378456a"
-
-PROTOBUF_COMMIT="v3.5.2"
-GRPC_COMMIT="v1.3.2"
+PROTOBUF_COMMIT="v3.6.1"
+GRPC_COMMIT="v1.17.2"
 
 NUM_CORES=`grep -c ^processor /proc/cpuinfo`
+
+# Install additional python packages
+sudo pip3 install scapy ply
+sudo pip install grpc protobuf cryptography scapy
 
 # Mininet
 
@@ -134,7 +131,7 @@ if [ ! -d "p4c" ]; then
   git submodule update --init --recursive
   mkdir -p build
   cd build
-  cmake -DPC_LIBGMP_LIBDIR="/usr/lib/x86_64-linux-gnu/" ..
+  cmake ..
   make -j${NUM_CORES}
   sudo make install
   sudo ldconfig
@@ -143,3 +140,4 @@ if [ ! -d "p4c" ]; then
 else
   echo "p4c already exists"
 fi
+

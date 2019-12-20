@@ -18,6 +18,7 @@ import threading
 
 import grpc
 from p4.v1 import p4runtime_pb2
+from p4.v1 import p4runtime_pb2_grpc
 from p4.tmp import p4config_pb2
 
 
@@ -28,7 +29,7 @@ class SwitchConnection(object):
         self.device_id = device_id
         self.p4info = None
         self.channel = grpc.insecure_channel(self.address)
-        self.client_stub = p4runtime_pb2.P4RuntimeStub(self.channel)
+        self.client_stub = p4runtime_pb2_grpc.P4RuntimeStub(self.channel)
         self.type = type
         self.crypto_client = None
         if self.type == 'tofino':

@@ -16,7 +16,7 @@ NUM_CORES=`grep -c ^processor /proc/cpuinfo`
 
 # Install additional python packages
 sudo pip3 install scapy ply
-sudo pip install grpc protobuf cryptography scapy
+sudo pip install grpcio protobuf cryptography scapy
 
 # Mininet
 
